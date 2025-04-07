@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Emails by Sender</h1>
+        
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('email.search_by_sender') }}">
+            <div class="mb-3">
+                <label for="sender" class="form-label">Sender</label>
+                <input type="text" name="sender" id="sender" class="form-control" placeholder="Enter sender email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        {% if emails %}
+            <h2 class="mt-4">Search Results</h2>
+            <ul class="list-group">
+                {% for email in emails %}
+                    <li class="list-group-item">Subject: {{ email.subject }}</li>  <!-- Displaying the subject -->
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

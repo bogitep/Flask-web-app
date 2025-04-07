@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Folders with User Info</h1>
+
+        <form action="{{ url_for('folders.search_with_user_info') }}" method="POST">
+            <div class="mb-3">
+                <label for="folder_name" class="form-label">Folder Name</label>
+                <input type="text" class="form-control" id="folder_name" name="folder_name" placeholder="Enter Folder Name">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        {% if folders %}
+        <h2 class="mt-4">Folders List</h2>
+        <ul class="list-group">
+                    {% for folder, username, email in folders %}
+            <li class="list-group-item">
+                <strong>Folder Name:</strong> {{ folder.folder_name }}<br>
+                <strong>User Username:</strong> {{ username }}<br>
+                <strong>User Email:</strong> {{ email }}<br>
+            </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    {% endblock %}

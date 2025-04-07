@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Users with Folders and Emails</h1>
+        
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('user.search_users_with_folders_emails') }}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Enter username" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        {% if users %}
+        <h2 class="mt-4">Search Results</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Folder Name</th>
+                    <th>Email Subject</th>
+                    <th>Email Sent At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.folder_name or "No Folder" }}</td>
+                    <td>{{ user.email_subject or "No Email" }}</td>
+                    <td>{{ user.email_sent_at or "N/A" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+{% endblock %}

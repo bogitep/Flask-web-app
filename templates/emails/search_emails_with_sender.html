@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Emails with Sender</h1>
+
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('email.search_emails_with_sender') }}">
+            <div class="mb-3">
+                <label for="keywords" class="form-label">Keywords</label>
+                <input type="text" name="keywords" id="keywords" class="form-control" placeholder="Enter keywords to search in email body" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert {{ messages[0][0] }} mt-3">
+                    {{ messages[0][1] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Display Results -->
+        {% if emails %}
+            <h2 class="mt-4">Search Results</h2>
+            <ul class="list-group">
+                {% for email, user in emails %}
+                    <li class="list-group-item">
+                        <strong>Subject:</strong> {{ email.subject }}<br>
+                        <strong>Sender:</strong> {{ user.username if user else 'Unknown' }}<br>  <!-- Display sender info -->
+                        <strong>Body:</strong> {{ email.body }}
+                        <strong>Sent At:</strong> {{ email.sent_at }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

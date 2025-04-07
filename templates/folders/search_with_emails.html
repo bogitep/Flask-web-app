@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Search Folders by Email Folder ID</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-{{ messages[0][0] }}">
+                    {{ messages[0][1] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('folders.search_by_email_folder') }}" method="POST">
+            <div class="form-group">
+                <label for="email_folder_id">Email Folder ID</label>
+                <input type="text" class="form-control" id="email_folder_id" name="email_folder_id" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        {% if folders %}
+            <h2 class="mt-4">Found Folders</h2>
+            <ul class="list-group">
+                {% for folder in folders %}
+                    <li class="list-group-item">{{ folder.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    {% endblock %}

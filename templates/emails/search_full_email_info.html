@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Full Email Information</h1>
+
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('email.search_full_email_info') }}">
+            <div class="mb-3">
+                <label for="keywords" class="form-label">Keywords</label>
+                <input type="text" name="keywords" id="keywords" class="form-control" placeholder="Enter keywords to search" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Display Results -->
+        {% if emails %}
+            <h2 class="mt-4">Search Results</h2>
+            <div class="list-group mt-3">
+                {% for email in emails %}
+                    <div class="list-group-item">
+                        <h5 class="mb-1">{{ email.subject }}</h5>
+                        <p class="mb-2">{{ email.body|truncate(150) }}</p>
+                        <p>
+                            <strong>Sender:</strong> 
+                            {{ email.sender.username if email.sender else 'Unknown' }}  <!-- Display sender -->
+                        </p>
+                        <p><strong>Sent At:</strong> {{ email.sent_at }}</p>
+
+                        <p><strong>Recipients:</strong></p>
+                        <ul>
+                            {% for recipient in email.recipients %}
+                                <li>{{ recipient.name }} ({{ recipient.email_id }})</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

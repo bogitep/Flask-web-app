@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Recipients with Emails</h1>
+
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="mb-3">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        
+        <!-- Search Form -->
+        <form action="{{ url_for('recipients.search_recipients_with_emails') }}" method="POST">
+            <div class="mb-3">
+                <label for="email_subject" class="form-label">Enter Email Subject:</label>
+                <input type="text" class="form-control" id="email_subject" name="email_subject" placeholder="e.g., Important, Meeting, etc.">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        {% if recipients %}
+            <h2 class="mt-4">Recipient List</h2>
+            <ul class="list-group">
+                {% for recipient in recipients %}
+                    <li class="list-group-item">
+                        <strong>Recipient :</strong> {{ recipient[0] }}<br>
+                        <strong>Email ID:</strong> {{ recipient[1] }}<br>
+                        <strong>Subject:</strong> {{ recipient[2] }}<br>
+                        <strong>Body:</strong> {{ recipient[3] }}<br>
+                        <strong>User:</strong> {{ recipient[4] }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    {% endblock %}

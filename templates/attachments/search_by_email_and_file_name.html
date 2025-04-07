@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Attachments by Email and File Name</h1>
+
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('attachment.search_by_email_and_file_name') }}">
+            <div class="mb-3">
+                <label for="email_id" class="form-label">Email ID</label>
+                <input type="text" class="form-control" id="email_id" name="email_id" required>
+            </div>
+            <div class="mb-3">
+                <label for="file_name" class="form-label">File Name</label>
+                <input type="text" class="form-control" id="file_name" name="file_name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Display Attachments -->
+        {% if attachments %}
+            <h2 class="mt-4">Attachments List</h2>
+            <ul class="list-group mt-3">
+                {% for attachment in attachments %}
+                    <li class="list-group-item">
+                        <strong>Attachment ID:</strong> {{ attachment.id }}<br>
+                        <strong>Email ID:</strong> {{ attachment.email_id }}<br>
+                        <strong>File Name:</strong> {{ attachment.file_name }}<br>
+                        <strong>File Type:</strong> {{ attachment.file_type }}<br>
+                        <strong>File Size:</strong> {{ attachment.file_size }} KB
+                    </li>
+                {% endfor %}
+                </ul>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Users with Recipients</h1>
+        
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('user.search_users_with_recipients') }}">
+            <div class="mb-3">
+                <label for="recipient_name" class="form-label">Recipient Name</label>
+                <input type="text" name="recipient_name" id="recipient_name" class="form-control" placeholder="Enter recipient name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        {% if users %}
+        <h2 class="mt-4">Search Results</h2>
+        <ul class="list-group">
+            {% for user in users %}
+            <li class="list-group-item">
+                <strong>Username:</strong> {{ user.username }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endblock %}

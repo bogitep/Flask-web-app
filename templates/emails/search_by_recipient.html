@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Emails by Recipient</h1>
+
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('email.search_by_recipient') }}">
+            <div class="mb-3">
+                <label for="recipient" class="form-label">Recipient</label>
+                <input type="text" name="recipient" id="recipient" class="form-control" placeholder="Enter recipient name or email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Display Results -->
+        {% if emails %}
+            <h2 class="mt-4">Search Results</h2>
+            <ul class="list-group">
+                {% for email, recipient in emails %}
+                    <li class="list-group-item">
+                        <strong>Subject:</strong> {{ email.subject }}<br>
+                        <strong>Recipient:</strong> {{ recipient.name if recipient.name else recipient.email_id }}<br> <!-- Display recipient info -->
+                        <strong>Body:</strong> {{ email.body }}
+                        <strong>Sent At:</strong> {{ email.sent_at }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

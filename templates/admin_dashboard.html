@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="container d-flex align-items-center justify-content-center min-vh-100 position-relative">
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-4">
+                <div class="bg-white p-4 shadow-lg rounded">
+                    {% if current_user.is_authenticated %}
+                    <h1 class="text-center mb-4 fw-bold">Welcome to the Email Dashboard</h1>
+                    {% else %}
+                    <div class="text-center">
+                        <h1 class="fw-bold mb-4">Welcome to the Email Dashboard</h1>
+                        <p class="lead">Please <a href="{{ url_for('auth.login') }}">log in</a> or <a href="{{ url_for('auth.register') }}">register</a> to access the dashboard.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary position-fixed w-100 top-0">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/">Email Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    {% if current_user.is_authenticated %}
+                        <!-- Dropdown Menu for adding records -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="addDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Add</a>
+                            <ul class="dropdown-menu" aria-labelledby="addDropdown">
+                                <li><a class="dropdown-item" href="{{ url_for('user.add_user') }}">User</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('email.add_email') }}">Email</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('recipients.add_recipient') }}">Recipient</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('attachment.add_attachment') }}">Attachment</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('folders.add_folder') }}">Folder</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('recipient_types.add_recipient_type') }}">Recipient Type</a></li>
+                            </ul>
+                        </li>
+    
+                        <!-- Dropdown Menu for listing records -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="listDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">List</a>
+                            <ul class="dropdown-menu" aria-labelledby="listDropdown">
+                                <li><a class="dropdown-item" href="{{ url_for('user.list_users') }}">Users</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('email.list_emails') }}">Emails</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('recipients.list_recipients') }}">Recipients</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('attachment.list_attachments') }}">Attachments</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('folders.list_folders') }}">Folders</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('recipient_types.list_recipient_types') }}">Recipient Types</a></li>
+                            </ul>
+                        </li>
+    
+                        <!-- Update Dropdown Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="updateDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Update
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="updateDropdown">
+                                <!-- Update Users -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="userSubMenu" role="button" aria-expanded="false">Users</a>
+                                    <ul class="dropdown-menu">
+                                        {% if users %}
+                                            {% for user in users %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ url_for('user.update_user', user_id=user.id) }}">
+                                                        Update User (Name: {{ user.username }})
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li><span class="dropdown-item text-muted">No users available to update</span></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                
+    
+                                <!-- Update Emails -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="emailSubMenu" role="button" aria-expanded="false">Emails</a>
+                                    <ul class="dropdown-menu">
+                                        {% if emails %}
+                                            {% for email in emails %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ url_for('email.update_email', id=email.id) }}">
+                                                        Update Email (Subject: {{ email.subject }})
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li><span class="dropdown-item text-muted">No emails available to update</span></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+    
+                                <!-- Update Recipients -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="recipientSubMenu" role="button" aria-expanded="false">Recipients</a>
+                                    <ul class="dropdown-menu">
+                                        {% if recipients %}
+                                            {% for recipient in recipients %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ url_for('recipients.update_recipient', recipient_id=recipient.id) }}">
+                                                        Update Recipient (Name: {{ recipient.name }})
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li><span class="dropdown-item text-muted">No recipients available to update</span></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+    
+                                <!-- Update Attachments -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="attachmentSubMenu" role="button" aria-expanded="false">Attachments</a>
+                                    <ul class="dropdown-menu">
+                                        {% if attachments %}
+                                            {% for attachment in attachments %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ url_for('attachment.update_attachment', attachment_id=attachment.id) }}">
+                                                        Update Attachment (Name: {{ attachment.file_name }})
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li><span class="dropdown-item text-muted">No attachments available to update</span></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+    
+                                <!-- Update Folders -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="folderSubMenu" role="button" aria-expanded="false">Folders</a>
+                                    <ul class="dropdown-menu">
+                                        {% if folders %}
+                                            {% for folder in folders %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ url_for('folders.update_folder', folder_id=folder.id) }}">
+                                                        Update Folder (Name: {{ folder.folder_name }})
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li><span class="dropdown-item text-muted">No folders available to update</span></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+    
+                                <!-- Update Recipient Types -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="recipientTypeSubMenu" role="button" aria-expanded="false">Recipient Types</a>
+                                    <ul class="dropdown-menu">
+                                        {% if recipient_types %}
+                                            {% for recipient_type in recipient_types %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ url_for('recipient_types.update_recipient_type', recipient_type_id=recipient_type.id) }}">
+                                                        Update Recipient Type (Name: {{ recipient_type.name }})
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li><span class="dropdown-item text-muted">No recipient types available to update</span></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+    
+                        <!-- Search Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Search
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="searchDropdown">
+                                <!-- Users Search Submenu -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="searchUsersSubmenu" role="button" aria-expanded="false">Users</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ url_for('user.search_users_with_folders') }}">Users with Folders</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('user.search_users_with_recipients') }}">Users with Recipients</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('user.search_users_with_email_details') }}">Users with Email Details</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('user.search_users_with_folders_emails') }}">Users with Folders and Emails</a></li>
+                                    </ul>
+                                </li>
+    
+                                <!-- Emails Search Submenu -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="searchEmailsSubmenu" role="button" aria-expanded="false">Emails</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_by_sender') }}">Search by Sender</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_by_keywords') }}">Search by Keywords</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_by_date_range') }}">Search by Date Range</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_by_subject_and_sender') }}">Search by Subject & Sender</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_emails_with_sender') }}">Search Emails with Sender Info</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_by_recipient') }}">Search by Recipient</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_by_domain') }}">Search by Domain</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('email.search_full_email_info') }}">Full Email Info</a></li>
+                                    </ul>
+                                </li>
+    
+                                <!-- Recipients Search Submenu -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="searchRecipientsSubmenu" role="button" aria-expanded="false">Recipients</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ url_for('recipients.search_recipients_by_type', type_name='desired_type_name') }}">Search by Type</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('recipients.search_recipients_with_emails') }}">Search with Emails</a></li>
+                                    </ul>
+                                </li>
+
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#" id="searchAttachmentsSubmenu" role="button" aria-expanded="false">Attachments</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url_for('attachment.search_by_email_id') }}">Search by Email ID</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('attachment.search_by_file_name') }}">Search by File Name</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('attachment.search_by_email_and_file_name') }}">Search by Email and File Name</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('attachment.search_with_users_info') }}">Search with Users Info</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('attachment.search_by_file_size') }}">Search by File Size</a></li>
+                            </ul>
+                        </li>
+
+                <li class="dropdown-submenu">
+                    <a class="dropdown-item dropdown-toggle" href="#" id="searchAttachmentsSubmenu" role="button" aria-expanded="false">Folders</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('folders.search_by_name') }}">Search by Name</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('folders.search_by_user_id') }}">Search by User ID</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('folders.search_with_user_info') }}">Search by User Info</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('folders.search_by_email_folder') }}">Search by Email Folder</a></li>
+                    </ul>
+                </li>
+
+        <li class="dropdown-submenu">
+            <a class="dropdown-item dropdown-toggle" href="#" id="searchAttachmentsSubmenu" role="button" aria-expanded="false">Recipient Types</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ url_for('recipient_types.search_by_name') }}">Search by Name</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('recipient_types.search_with_recipients') }}">Search with Recipients</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('recipient_types.search_with_emails') }}">Search with Emails</a></li>
+            </ul>
+        </li>
+    </ul>   
+</li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+    
+
+    <section>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container mt-3">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/custom-dropdown.js') }}"></script>
+</body>
+</html>

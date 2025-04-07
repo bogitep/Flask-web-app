@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Recipients by Type</h1>
+        
+        <!-- Search Form -->
+        <form action="{{ url_for('recipients.search_recipients_by_type') }}" method="POST">
+            <div class="mb-3">
+                <label for="type" class="form-label">Enter Type:</label>
+                <input type="text" class="form-control" id="type" name="type_name" placeholder="e.g., Work, Personal, etc." required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        {% if recipients %}
+            <h2 class="mt-4">Recipient List</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recipient ID</th>
+                        <th>Email ID</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipient in recipients %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ recipient[0] }}</td>
+                            <td>{{ recipient[1] }}</td>
+                            <td>{{ recipient[2] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+   {% endblock %}

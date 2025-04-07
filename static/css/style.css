@@ -1,0 +1,83 @@
+/* Base CSS */
+body {
+    background: transparent;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 56px;
+}
+
+/* Navbar Styling */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+}
+
+/* Sidebar Styling */
+.bg-light {
+    padding-top: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.nav-link {
+    color: #333;
+}
+
+.nav-link:hover {
+    background-color: #f8f9fa;
+}
+
+/* Main Content Styling */
+main {
+    margin-top: 80px;
+}
+
+.table-responsive {
+    margin-top: 30px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Modal Styling */
+.modal-dialog {
+    max-width: 500px;
+}
+
+.modal-body ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.modal-body ul li {
+    margin-bottom: 10px;
+}
+
+/* Dropdown Styling */
+.form-select {
+    color: rgb(255, 255, 255);
+    background-color: white;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+/* Optional: Styling hover and focus */
+.form-select option:hover {
+    background-color: #f8f9fa;
+}
+
+/* Focus styling */
+.form-select:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container my-5 p-4 bg-white shadow-sm rounded">
+    <h1 class="text-center mb-4">Search Emails by Folder</h1>
+    <form method="POST" action="{{ url_for('folders.search_by_email_folder') }}">
+        <div class="mb-3">
+            <label for="folder_id" class="form-label">Folder:</label>
+            <select id="folder_id" name="folder_id" class="form-select" required>
+                {% for folder in folders %}
+                    <option value="{{ folder.id }}">{{ folder.folder_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </form>
+
+    {% if emails %}
+        <h2 class="mt-4">Emails in Selected Folder</h2>
+        <ul class="list-group mt-3">
+            {% for email in emails %}
+                <li class="list-group-item">
+                    <strong>{{ email.subject }}</strong><br>
+                    <small>Sent by: {{ email.sender.username }} on {{ email.sent_at }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</main>
+{% endblock %}

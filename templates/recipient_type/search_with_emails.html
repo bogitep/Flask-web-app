@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container my-5 p-4 bg-white shadow-sm rounded">
+    <h1 class="text-center mb-4">Search Recipient Types with Emails</h1>
+    <form method="POST" action="{{ url_for('recipient_types.search_with_emails') }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Recipient Name:</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter recipient name" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </form>
+
+    {% if results %}
+        <h2 class="mt-4">Search Results</h2>
+        <ul class="list-group mt-3">
+            {% for result in results %}
+                <li class="list-group-item">
+                    <strong>Recipient Type:</strong> {{ result.recipient_type_name }}<br>
+                    <strong>Email Subject:</strong> {{ result.email_subject }}<br>
+                    <strong>Recipient Name:</strong> {{ result.recipient_name }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif request.method == 'POST' %}
+        <p class="mt-3">No matching results found.</p>
+    {% endif %}
+</main>
+{% endblock %}

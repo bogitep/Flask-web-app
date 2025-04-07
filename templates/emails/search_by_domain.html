@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Emails by Domain</h1>
+
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('email.search_by_domain') }}">
+            <div class="mb-3">
+                <label for="domain" class="form-label">Domain</label>
+                <input type="text" name="domain" id="domain" class="form-control" placeholder="Enter domain (e.g., example.com)" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+
+        <!-- Display Results -->
+        {% if emails %}
+            <h2 class="mt-4">Search Results</h2>
+            <ul class="list-group">
+                {% for user in emails %}
+                    <li class="list-group-item">
+                        <strong>Email:</strong> {{ user.email }}<br>
+                        <strong>Username:</strong> {{ user.username }}
+                        <strong>Created At:</strong> {{ user.created_at }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+{% endblock %}

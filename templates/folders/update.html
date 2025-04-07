@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Update Folder</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="folder_name" class="form-label">Folder Name</label>
+            <input type="text" id="folder_name" name="folder_name" class="form-control" value="{{ folder.folder_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="user_id" class="form-label">User</label>
+            <select id="user_id" name="user_id" class="form-select" required style="color: rgb(0, 0, 0); background-color: white;">
+                {% for user in users %}
+                    <option value="{{ user.id }}" {% if folder.user_id == user.id %}selected{% endif %}>{{ user.name }}</option>
+                {% endfor %}
+            </select>            
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Update Folder</button>
+            <a href="{{ url_for('folders.list_folders') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

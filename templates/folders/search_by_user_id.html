@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Folders by User ID</h1>
+
+        <form action="{{ url_for('folders.search_by_user_id') }}" method="POST">
+            <div class="mb-3">
+                <label for="user_id" class="form-label">User ID</label>
+                <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Enter User ID">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        {% if folders %}
+        <h2 class="mt-4">Folders List</h2>
+        <ul class="list-group">
+            {% for folder in folders %}
+                <li class="list-group-item">
+                    <strong>Folder ID:</strong> {{ folder.id }}<br>
+                    <strong>Folder Name:</strong> {{ folder.folder_name }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    {% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Update Recipient</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="recipient_name" class="form-label">Recipient Name</label>
+            <input type="text" id="recipient_name" name="recipient_name" class="form-control" value="{{ recipient.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="recipient_type" class="form-label">Recipient Type</label>
+            <select id="recipient_type" name="recipient_type" class="form-select" required>
+                {% for recipient_type in recipient_types %}
+                    <option value="{{ recipient_type.id }}" {% if recipient.recipient_type_id == recipient_type.id %}selected{% endif %}>
+                        {{ recipient_type.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="email_id" class="form-label">Email</label>
+            <select id="email_id" name="email_id" class="form-select" required>
+                {% for email in emails %}
+                    <option value="{{ email.id }}" {% if recipient.email_id == email.id %}selected{% endif %}>
+                        {{ email.email }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="user_id" class="form-label">User</label>
+            <select id="user_id" name="user_id" class="form-select" required>
+                {% for user in users %}
+                    <option value="{{ user.id }}" {% if recipient.user_id == user.id %}selected{% endif %}>
+                        {{ user.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Recipient</button>
+        <a href="{{ url_for('recipients.list_recipients') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

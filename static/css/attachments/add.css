@@ -1,0 +1,43 @@
+body {
+    background: transparent;
+    font-family: Arial, sans-serif;
+    padding-top: 80px; 
+}
+
+.bg-light {
+    padding-top: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.nav-link {
+    color: #333;
+}
+
+.nav-link:hover {
+    background-color: #f8f9fa;
+}
+
+.table-responsive {
+    margin-top: 30px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+.modal-dialog {
+    max-width: 500px;
+}
+
+.modal-body ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.modal-body ul li {
+    margin-bottom: 10px;
+}

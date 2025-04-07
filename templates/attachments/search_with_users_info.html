@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Attachments with User Info</h1>
+
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('attachment.search_with_users_info') }}">
+            <div class="mb-3">
+                <label for="search_query" class="form-label">Search by File Name or Username</label>
+                <input type="text" class="form-control" id="search_query" name="search_query" placeholder="Enter file name or username" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Display Results -->
+        {% if attachments %}
+            <h2 class="mt-4">Search Results</h2>
+            <ul class="list-group mt-3">
+                {% for attachment, email, user in attachments %}
+                    <li class="list-group-item">
+                        <p><strong>Attachment ID:</strong> {{ attachment.id }}</p>
+                        <p><strong>File Name:</strong> {{ attachment.file_name }}</p>
+                        <p><strong>File Type:</strong> {{ attachment.file_type }}</p>
+                        <p><strong>File Size:</strong> {{ attachment.file_size }} MB</p>
+                        <p><strong>Email ID:</strong> {{ email.id }}</p>
+                        <p><strong>Email Subject:</strong> {{ email.subject }}</p>
+                        <p><strong>Sender Username:</strong> {{ user.username }}</p>
+                        <p><strong>Sender Email:</strong> {{ user.email }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+{% endblock %}

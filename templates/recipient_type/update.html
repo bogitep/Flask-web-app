@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Update Recipient Type</h1>
+
+    <!-- Form for updating recipient type -->
+    <form method="POST" action="{{ url_for('recipient_types.update_recipient_type', recipient_type_id=recipient_type.id) }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Recipient Type Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ recipient_type.name }}" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Update Recipient Type</button>
+    </form>
+
+    <!-- Link back to the list of recipient types -->
+    <a href="{{ url_for('recipient_types.list_recipient_types') }}" class="btn btn-secondary mt-3">Back to Recipient Types List</a>
+</div>
+{% endblock %}

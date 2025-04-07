@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Attachments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/attachment/add.css') }}" rel="stylesheet">
+</head>
+<body>
+<main class="container my-5 p-4 bg-white shadow-sm rounded">
+    <h1 class="text-center mb-4">Add attachment</h1>
+    <form method="POST" action="{{ url_for('attachment.add_attachment') }}">
+        <div class="mb-3">
+            <label for="file_name" class="form-label">File Name:</label>
+            <input type="text" id="file_name" name="file_name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="file_type" class="form-label">File Type:</label>
+            <input type="text" id="file_type" name="file_type" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="file_size" class="form-label">File Size:</label>
+            <input type="text" id="file_size" name="file_size" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="email_id" class="form-label">Email ID:</label>
+            <input type="text" id="email_id" name="email_id" class="form-control" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100">Add Attachment</button>
+    </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

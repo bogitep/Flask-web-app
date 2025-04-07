@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Users with Email Details</h1>
+        
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('user.search_users_with_email_details') }}">
+            <div class="mb-3">
+                <label for="email_query" class="form-label">Email Subject</label>
+                <input type="text" name="email_query" id="email_query" class="form-control" placeholder="Enter email subject" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        {% if users %}
+        <h2 class="mt-4">Search Results</h2>
+        <ul class="list-group">
+            {% for user in users %}
+            <li class="list-group-item">
+                <strong>Username:</strong> {{ user.username }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endblock %}

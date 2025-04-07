@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Update User</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+        </div>
+        
+        <div class="mb-3">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+        </div>
+        
+        <div class="form-check">
+            {{ form.is_admin(class="form-check-input") }}
+            {{ form.is_admin.label(class="form-check-label") }}
+        </div>
+        
+        <div class="form-check">
+            {{ form.is_banned(class="form-check-input") }}
+            {{ form.is_banned.label(class="form-check-label") }}
+        </div>
+        
+        <div class="form-check">
+            {{ form.is_flagged(class="form-check-input") }}
+            {{ form.is_flagged.label(class="form-check-label") }}
+        </div>
+        
+        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{ url_for('user.list_users') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

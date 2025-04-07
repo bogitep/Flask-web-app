@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Search Attachments by File Size</h1>
+
+        <!-- Search Form -->
+        <form action="{{ url_for('attachment.search_by_file_size') }}" method="POST">
+            <div class="mb-3">
+                <label for="min_size" class="form-label">Minimum File Size (KB)</label>
+                <input type="number" class="form-control" id="min_size" name="min_size" placeholder="Enter minimum file size">
+            </div>
+            <div class="mb-3">
+                <label for="max_size" class="form-label">Maximum File Size (KB)</label>
+                <input type="number" class="form-control" id="max_size" name="max_size" placeholder="Enter maximum file size">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Display Results -->
+        {% if attachments_with_email_user %}
+            <h2 class="mt-4">Attachments List</h2>
+            <ul class="list-group">
+                {% for attachment, email, user in attachments_with_email_user %}
+                    <li class="list-group-item">
+                        <strong>Attachment ID:</strong> {{ attachment.id }}<br>
+                        <strong>File Name:</strong> {{ attachment.file_name }}<br>
+                        <strong>File Type:</strong> {{ attachment.file_type }}<br>
+                        <strong>File Size:</strong> {{ attachment.file_size }} MB<br>
+                        <strong>Email Subject:</strong> {{ email.subject }}<br>
+                        <strong>Email Sent At:</strong> {{ email.sent_at }}<br>
+                        <strong>Sender Name:</strong> {{ user.username }}<br>
+                        <strong>Sender Email:</strong> {{ user.email }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+{% endblock %}

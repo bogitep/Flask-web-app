@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Update Attachment</h1>
+
+    <form method="POST">
+        <!-- File Name Field -->
+        <div class="mb-3">
+            <label for="file_name" class="form-label">File Name</label>
+            <input type="text" id="file_name" name="file_name" class="form-control" value="{{ attachment.file_name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="file_type" class="form-label">File Type</label>
+            <input type="text" id="file_type" name="file_type" class="form-control" value="{{ attachment.file_type }}" >
+        </div>
+        <div class="mb-3">
+            <label for="file_size" class="form-label">File Size</label>
+            <input type="text" id="file_size" name="file_size" class="form-control" value="{{ attachment.file_size }}" >
+        </div>
+        <!-- File Path Field -->
+        <div class="mb-3">
+            <label for="file_path" class="form-label">File Path</label>
+            <input type="text" id="file_path" name="file_path" class="form-control" value="{{ attachment.file_path }}" >
+        </div>
+    
+        <!-- Submit and Cancel buttons -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Update Attachment</button>
+            <a href="{{ url_for('attachment.list_attachments') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Email</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/emails/add.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<main class="container my-5 p-4 bg-white shadow-sm rounded">
+    <h1 class="text-center mb-4">Add a New Email</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="sender" class="form-label">Sender Email:</label>
+            <input type="email" id="sender" name="sender" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject:</label>
+            <input type="text" id="subject" name="subject" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="body" class="form-label">Body:</label>
+            <textarea id="body" name="body" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="sent_at" class="form-label">Sent At:</label>
+            <input type="datetime-local" id="sent_at" name="sent_at" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="folder_id" class="form-label">Folder:</label>
+            <select id="folder_id" name="folder_id" class="form-control">
+                <option value="">Select Folder (Optional)</option>
+                {% for folder in folders %}
+                    <option value="{{ folder.id }}">{{ folder.folder_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add Email</button>
+    </form>
+    
+    
+
+    <video autoplay muted loop id="bg-video">
+        <source src="{{ url_for('static', filename='videos/istockphoto-2157012706-640_adpp_is.mp4') }}" type="video/mp4">
+    </video>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
